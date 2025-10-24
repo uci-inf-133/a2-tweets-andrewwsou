@@ -7,6 +7,14 @@ class Tweet {
 		this.time = new Date(tweet_time);//, "ddd MMM D HH:mm:ss Z YYYY"
 	}
 
+    get times(): Date {
+        return this.time;
+    }
+
+    get tweetText(): string {
+        return this.text;
+    }
+
 	//returns either 'live_event', 'achievement', 'completed_event', or 'miscellaneous'
     get source():string {
         //TODO: identify whether the source is a live event, an achievement, a completed event, or miscellaneous.
