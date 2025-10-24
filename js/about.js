@@ -13,14 +13,27 @@ function parseTweets(runkeeper_tweets) {
 	const earliestTweet = new Date(Math.min(...times)).toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'});
 	const latestTweet = new Date(Math.max(...times)).toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'});
 
-	console.log(earliestTweet)
-	console.log(latestTweet)
+	// console.log(earliestTweet)
+	// console.log(latestTweet)
 	document.getElementById('firstDate').innerText = earliestTweet;
 	document.getElementById('lastDate').innerText = latestTweet;
 	
+
 	//This line modifies the DOM, searching for the tag with the numberTweets ID and updating the text.
 	//It works correctly, your task is to update the text of the other tags in the HTML file!
 	document.getElementById('numberTweets').innerText = tweet_array.length;	
+
+
+	const tweetCounts = { completed_event: 0, live_event: 0, achievement: 0, miscellaneous: 0 };
+
+	tweet_array.forEach(tweet => tweetCounts[tweet.source]+= 1);
+
+	// console.log(tweetCounts)
+	document.querySelectorAll('.completedEvents').forEach(compEvents => compEvents.innerText = tweetCounts.completed_event);
+	document.getElementsByClassName('liveEvents')[0].innerText = tweetCounts.live_event;
+	document.getElementsByClassName('achievements')[0].innerText = tweetCounts.achievement;
+	document.getElementsByClassName('miscellaneous')[0].innerText = tweetCounts.miscellaneous;
+
 }
 
 //Wait for the DOM to load
