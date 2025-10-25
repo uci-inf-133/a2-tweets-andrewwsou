@@ -52,6 +52,9 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementsByClassName('written')[0].innerText = writtenTweets;
 	document.getElementsByClassName('writtenPct')[0].innerText = writtenPct + '%';
 
+
+
+	tweet_array.forEach(tweet => { if (tweet.source === 'completed_event') console.log(tweet.activityType) });
 }
 
 //Wait for the DOM to load
