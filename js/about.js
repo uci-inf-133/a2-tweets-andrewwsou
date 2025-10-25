@@ -25,10 +25,8 @@ function parseTweets(runkeeper_tweets) {
 
 
 	const tweetCounts = { completed_event: 0, live_event: 0, achievement: 0, miscellaneous: 0 };
-
 	tweet_array.forEach(tweet => tweetCounts[tweet.source]+= 1);
 
-	// console.log(tweetCounts)
 	document.querySelectorAll('.completedEvents').forEach(compEvents => compEvents.innerText = tweetCounts.completed_event);
 	document.getElementsByClassName('liveEvents')[0].innerText = tweetCounts.live_event;
 	document.getElementsByClassName('achievements')[0].innerText = tweetCounts.achievement;
@@ -36,7 +34,6 @@ function parseTweets(runkeeper_tweets) {
 
 	
 	const totalTweets = tweet_array.length;
-
 	const compPct = math.format(((tweetCounts.completed_event / totalTweets) * 100), { notation: 'fixed', precision: 2 });
 	const livePct = math.format(((tweetCounts.live_event / totalTweets) * 100), { notation: 'fixed', precision: 2 });
 	const achievementPct = math.format(((tweetCounts.achievement / totalTweets) * 100), { notation: 'fixed', precision: 2 });
@@ -46,6 +43,14 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementsByClassName('liveEventsPct')[0].innerText = livePct + '%';
 	document.getElementsByClassName('achievementsPct')[0].innerText = achievementPct + '%';
 	document.getElementsByClassName('miscellaneousPct')[0].innerText = miscPct + '%';
+
+
+	let writtenTweets = 0;
+	tweet_array.forEach(tweet => { if (tweet.written) writtenTweets++ });
+	const writtenPct = math.format(((writtenTweets / tweetCounts.completed_event) * 100), { notation: 'fixed', precision: 2 });
+	
+	document.getElementsByClassName('written')[0].innerText = writtenTweets;
+	document.getElementsByClassName('writtenPct')[0].innerText = writtenPct + '%';
 
 }
 

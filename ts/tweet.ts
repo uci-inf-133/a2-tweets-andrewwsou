@@ -25,7 +25,11 @@ class Tweet {
     //returns a boolean, whether the text includes any content written by the person tweeting.
     get written():boolean {
         //TODO: identify whether the tweet is written
-        return false;
+        const currTweet = this.text.slice(0, -35);
+        if (currTweet.endsWith("Check it out!")) {
+            return false;
+        }
+        return true;
     }
 
     get writtenText():string {
