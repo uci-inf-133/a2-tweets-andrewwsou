@@ -9,6 +9,28 @@ function parseTweets(runkeeper_tweets) {
 		return new Tweet(tweet.text, tweet.created_at);
 	});
 
+
+	const activityTracker = {};
+	tweet_array.forEach( tweet => {
+		const activity = tweet.activityType;
+		const distance = tweet.distance;
+		if (!activityTracker[activity]) {
+			activityTracker[activity] = { totalDistance: 0, logs: 0 };
+		}
+		// if (activity == "run") {
+		// 	console.log(tweet.text)
+		// 	console.log(distance);
+		// 	console.log(tweet.text)
+		// }
+		activityTracker[activity].totalDistance += distance;
+		activityTracker[activity].logs += 1;
+	});
+
+	document.getElementById('numberActivities').innerText = Object.keys(activityTracker).length;
+	console.log(activityTracker);
+
+
+
 	//TODO: create a new array or manipulate tweet_array to create a graph of the number of tweets containing each type of activity.
 
 	activity_vis_spec = {

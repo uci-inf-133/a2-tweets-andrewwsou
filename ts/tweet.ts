@@ -63,7 +63,20 @@ class Tweet {
         if(this.source != 'completed_event') {
             return 0;
         }
-        //TODO: prase the distance from the text of the tweet
+        //TODO: parse the distance from the text of the tweet
+        const currTweet = this.text.split(" ");
+        let indexUnit = currTweet.indexOf("mi");
+        if (indexUnit != -1) {
+            const prev = currTweet[indexUnit - 1]
+            const value = parseFloat(prev);
+            if (Number.isFinite(value)) { return value };
+        }
+        indexUnit = currTweet.indexOf("km");
+        if (indexUnit != -1) {
+            const prev = currTweet[indexUnit - 1]
+            const value = parseFloat(prev);
+            if (Number.isFinite(value)) { return (value / 1.609) };
+        }
         return 0;
     }
 

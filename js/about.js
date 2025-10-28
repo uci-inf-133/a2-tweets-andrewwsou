@@ -54,7 +54,6 @@ function parseTweets(runkeeper_tweets) {
 
 
 
-	tweet_array.forEach(tweet => { if (tweet.source === 'completed_event') console.log(tweet.activityType) });
 }
 
 //Wait for the DOM to load
