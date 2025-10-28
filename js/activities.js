@@ -27,7 +27,25 @@ function parseTweets(runkeeper_tweets) {
 	});
 
 	document.getElementById('numberActivities').innerText = Object.keys(activityTracker).length;
-	console.log(activityTracker);
+	// console.log(activityTracker);
+
+	const activityLogs = Object.entries(activityTracker);
+	activityLogs.sort((a, b) => b[1].logs - a[1].logs);
+
+	const topThree = activityLogs.slice(0, 3);
+
+	document.getElementById('firstMost').innerText = topThree[0][0];
+	document.getElementById('secondMost').innerText = topThree[1][0];
+	document.getElementById('thirdMost').innerText = topThree[2][0];
+
+	topThree.sort((a, b) => b[1].totalDistance - a[1].totalDistance);
+
+	document.getElementById('longestActivityType').innerText = topThree[0][0];
+	document.getElementById('shortestActivityType').innerText = topThree[2][0];
+
+
+
+	console.log(activityLogs);
 
 
 
