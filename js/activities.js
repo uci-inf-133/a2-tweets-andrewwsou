@@ -15,7 +15,7 @@ function parseTweets(runkeeper_tweets) {
 		const activity = tweet.activityType;
 		const distance = tweet.distance;
 		if (!activityTracker[activity]) {
-			activityTracker[activity] = { totalDistance: 0, logs: 0, weekday: 0, weekend: 0 };
+			activityTracker[activity] = { totalDistance: 0, logs: 0, weekday: 0, weekend: 0, weekdayLogs: 0, weekendLogs: 0 };
 		}
 
 		activityTracker[activity].totalDistance += distance;
@@ -27,6 +27,8 @@ function parseTweets(runkeeper_tweets) {
 		// console.log(categorizedDOW);
 		// console.log(activityTracker[activity].categorizedDOW);
 		activityTracker[activity][categorizedDOW] += distance;
+		if (categorizedDOW === "weekend") { activityTracker[activity].weekendLogs += 1; }
+		if (categorizedDOW === "weekday") { activityTracker[activity].weekdayLogs += 1; }
 	});
 
 	document.getElementById('numberActivities').innerText = Object.keys(activityTracker).length;
@@ -45,6 +47,28 @@ function parseTweets(runkeeper_tweets) {
 
 	document.getElementById('longestActivityType').innerText = topThree[0][0];
 	document.getElementById('shortestActivityType').innerText = topThree[2][0];
+
+
+	let totalWeekdayAvg = 0, totalWeekendAvg = 0;
+
+	for (const activity in activityTracker) {
+		const currActivity = activityTracker[activity];
+
+		totalWeekdayAvg += currActivity.weekdayLogs > 0 ? currActivity.weekday / currActivity.weekdayLogs : 0;
+		totalWeekendAvg += currActivity.weekendLogs > 0 ? currActivity.weekend / currActivity.weekendLogs : 0;
+	}
+	// console.log(totalWeekdayAvg);
+	const lengthWeekdays = totalWeekdayAvg / Object.keys(activityTracker).length;
+	const lengthWeekends = totalWeekendAvg / Object.keys(activityTracker).length;
+
+	if (lengthWeekdays > lengthWeekends) {
+		document.getElementById('weekdayOrWeekendLonger').innerText = "weekdays";
+	} else {
+		document.getElementById('weekdayOrWeekendLonger').innerText = "weekends";
+	}
+		// console.log(lengthWeekdays);
+		// console.log(lengthWeekends);
+
 
 	// const dateLogs = tweet_array.map(tweet => { })
 
