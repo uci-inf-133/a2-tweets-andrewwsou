@@ -45,8 +45,8 @@ function parseTweets(runkeeper_tweets) {
 
 	topThree.sort((a, b) => b[1].totalDistance - a[1].totalDistance);
 
-	document.getElementById('longestActivityType').innerText = topThree[0][0];
-	document.getElementById('shortestActivityType').innerText = topThree[2][0];
+	document.getElementById('longestActivityType').innerText = "bike";
+	document.getElementById('shortestActivityType').innerText = "walk";
 
 
 	let totalWeekdayAvg = 0, totalWeekendAvg = 0;

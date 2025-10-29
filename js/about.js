@@ -46,7 +46,7 @@ function parseTweets(runkeeper_tweets) {
 
 
 	let writtenTweets = 0;
-	tweet_array.forEach(tweet => { if (tweet.written) writtenTweets++ });
+	tweet_array.forEach(tweet => { if (tweet.written && tweet.source == "completed_event") writtenTweets++ });
 	const writtenPct = math.format(((writtenTweets / tweetCounts.completed_event) * 100), { notation: 'fixed', precision: 2 });
 	
 	document.getElementsByClassName('written')[0].innerText = writtenTweets;
