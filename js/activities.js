@@ -155,7 +155,7 @@ function parseTweets(runkeeper_tweets) {
 			"aggregate": "mean",
 			"field": "distance",
 			"type": "quantitative",
-			"axis": { "title": "distance" }
+			"axis": { "title": "Mean of distances" }
 		},
 		"color": {
 			"field": "activityType", 
@@ -163,7 +163,24 @@ function parseTweets(runkeeper_tweets) {
 		}
 	  }
 	};
-	vegaEmbed('#distanceVis', mean_vis_spec, {actions:false});
+	// vegaEmbed('#distanceVis', mean_vis_spec, {actions:false});
+
+	let showDistance = false;
+
+	function toggleDistancePlot() {
+		showDistance = !showDistance;
+		const toggle = showDistance ? distance_vis_spec : mean_vis_spec;
+		vegaEmbed('#distanceVis', toggle, {actions:false});
+	}	
+
+	toggleDistancePlot();
+
+	const aggregateButton = document.getElementById("aggregate");
+	aggregateButton.addEventListener('click', () => {
+		toggleDistancePlot();
+		aggregateButton.textContent = showDistance ? "Show means" : "Show all activities";
+	});
+
 }
 
 //Wait for the DOM to load
