@@ -121,13 +121,13 @@ function parseTweets(runkeeper_tweets) {
 		"x": {
 			"field": "dayOfWeek",
 			"type": "nominal",
-			"title": "Time (day)",
+			"title": "time (day)",
 			"sort": dayIndexes
 		},
 		"y": {
 			"field": "distance",
 			"type": "quantitative",
-			"axis": { "title": "Distance" }
+			"axis": { "title": "distance" }
 		},
 		"color": {
 			"field": "activityType", 
@@ -135,12 +135,35 @@ function parseTweets(runkeeper_tweets) {
 		}
 	  }
 	};
-	vegaEmbed('#distanceVis', distance_vis_spec, {actions:false});
+	// vegaEmbed('#distanceVis', distance_vis_spec, {actions:false});
 
-
-	
-
-	
+	mean_vis_spec = {
+	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+	  "description": "A graph of the aggregated mean for top three most tweeted activities and their distances.",
+	  "data": {
+	    "values": topThreeGraphing
+	  },
+	  "mark": "point",
+	  "encoding": {
+		"x": {
+			"field": "dayOfWeek",
+			"type": "nominal",
+			"title": "time (day)",
+			"sort": dayIndexes
+		},
+		"y": {
+			"aggregate": "mean",
+			"field": "distance",
+			"type": "quantitative",
+			"axis": { "title": "distance" }
+		},
+		"color": {
+			"field": "activityType", 
+			"type": "nominal"
+		}
+	  }
+	};
+	vegaEmbed('#distanceVis', mean_vis_spec, {actions:false});
 }
 
 //Wait for the DOM to load
