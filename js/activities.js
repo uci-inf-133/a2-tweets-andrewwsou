@@ -15,15 +15,18 @@ function parseTweets(runkeeper_tweets) {
 		const activity = tweet.activityType;
 		const distance = tweet.distance;
 		if (!activityTracker[activity]) {
-			activityTracker[activity] = { totalDistance: 0, logs: 0 };
+			activityTracker[activity] = { totalDistance: 0, logs: 0, weekday: 0, weekend: 0 };
 		}
-		// if (activity == "run") {
-		// 	console.log(tweet.text)
-		// 	console.log(distance);
-		// 	console.log(tweet.text)
-		// }
+
 		activityTracker[activity].totalDistance += distance;
 		activityTracker[activity].logs += 1;
+
+		const tweetTime = new Date(tweet.time);
+		const dayWeek = tweetTime.getDay();
+		const categorizedDOW = (dayWeek === 0 || dayWeek === 6) ? "weekend" : "weekday";
+		// console.log(categorizedDOW);
+		// console.log(activityTracker[activity].categorizedDOW);
+		activityTracker[activity][categorizedDOW] += distance;
 	});
 
 	document.getElementById('numberActivities').innerText = Object.keys(activityTracker).length;
@@ -43,9 +46,14 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('longestActivityType').innerText = topThree[0][0];
 	document.getElementById('shortestActivityType').innerText = topThree[2][0];
 
+	// const dateLogs = tweet_array.map(tweet => { })
 
+	// const daysWeekCounts = { weekday: 0, weekend: 0 };
+	// tweet_array.forEach(tweet => 
+	// 	if (tweet.activityType == "")
+	// );
 
-	console.log(activityLogs);
+	console.log(activityTracker);
 
 
 
