@@ -21,6 +21,7 @@ function addEventHandlerForSearch() {
 	const textInputBox = document.getElementById("textFilter");
 	const searchCount = document.getElementById("searchCount");
 	const searchText = document.getElementById("searchText"); 
+	const tweetTable = document.getElementById("tweetTable");
 	searchText.textContent = '';
 	searchCount.textContent = 0;
 	textInputBox.addEventListener("input", () => { 
@@ -29,12 +30,31 @@ function addEventHandlerForSearch() {
 		if (textInputBox.value === "") {
 			searchText.textContent = '';
 			searchCount.textContent = 0;
+			tweetTable.innerHTML = '';
 		} else {
 			searchText.textContent = textInputBox.value;
 			searchCount.textContent = table_matches.length;
+			tweetTable.innerHTML = '';
+			table_matches.forEach((tweet, index) => {
+				const row = document.createElement('tr');
+
+				const rowNum = document.createElement('td');
+				rowNum.textContent = index + 1;
+
+				const rowAct = document.createElement('td');
+				rowAct.textContent = tweet.activityType;
+
+				const rowTweet = document.createElement('td');
+				rowTweet.textContent = tweet.text;
+
+				row.appendChild(rowNum);
+				row.appendChild(rowAct);
+				row.appendChild(rowTweet);
+
+				tweetTable.appendChild(row);
+			})
 		}
 	 })
-
 
 
 }
