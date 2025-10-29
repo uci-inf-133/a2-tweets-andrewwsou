@@ -66,16 +66,6 @@ function parseTweets(runkeeper_tweets) {
 	} else {
 		document.getElementById('weekdayOrWeekendLonger').innerText = "weekends";
 	}
-		// console.log(lengthWeekdays);
-		// console.log(lengthWeekends);
-
-
-	// const dateLogs = tweet_array.map(tweet => { })
-
-	// const daysWeekCounts = { weekday: 0, weekend: 0 };
-	// tweet_array.forEach(tweet => 
-	// 	if (tweet.activityType == "")
-	// );
 
 	console.log(activityTracker);
 
@@ -88,13 +78,69 @@ function parseTweets(runkeeper_tweets) {
 	  "description": "A graph of the number of Tweets containing each type of activity.",
 	  "data": {
 	    "values": tweet_array
+	  },
+	  "mark": "bar",
+	  "encoding": {
+		"x": {
+			"field": "activityType",
+			"type": "nominal",
+			"title": "Activity"
+		},
+		"y": {
+			"type": "quantitative",
+			"aggregate": "count",
+			"axis": { "title": "Tweet Amount" }
+		}
 	  }
 	  //TODO: Add mark and encoding
 	};
 	vegaEmbed('#activityVis', activity_vis_spec, {actions:false});
 
+	const top3Names = topThree.map(activity => activity[0]);
+	const dayIndexes = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+	const topThreeGraphing = tweet_array
+		.filter(tweet => 
+			tweet.source === "completed_event" && top3Names.includes(tweet.activityType) && Number.isFinite(tweet.distance))
+		.map(tweet => 
+		({ activityType: tweet.activityType, distance: Number(tweet.distance), dayOfWeek: dayIndexes[tweet.time.getDay()]}));
+
+	console.log(topThreeGraphing);
+
+
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
+
+	distance_vis_spec = {
+	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+	  "description": "A graph of the distances of each type of activity per day of week.",
+	  "data": {
+	    "values": topThreeGraphing
+	  },
+	  "mark": "point",
+	  "encoding": {
+		"x": {
+			"field": "dayOfWeek",
+			"type": "nominal",
+			"title": "Time (day)",
+			"sort": dayIndexes
+		},
+		"y": {
+			"field": "distance",
+			"type": "quantitative",
+			"axis": { "title": "Distance" }
+		},
+		"color": {
+			"field": "activityType", 
+			"type": "nominal"
+		}
+	  }
+	};
+	vegaEmbed('#distanceVis', distance_vis_spec, {actions:false});
+
+
+	
+
+	
 }
 
 //Wait for the DOM to load
