@@ -11,7 +11,7 @@ function parseTweets(runkeeper_tweets) {
 		return new Tweet(tweet.text, tweet.created_at);
 	});
 
-	written_tweets = tweet_array.filter(tweet => (tweet.written === true));
+	written_tweets = tweet_array.filter(tweet => (tweet.written && tweet.source == "completed_event"));
 
 	//TODO: Filter to just the written tweets
 }
