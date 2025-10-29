@@ -37,7 +37,7 @@ class Tweet {
             return "";
         }
         //TODO: parse the written text from the tweet
-        return "";
+        return this.text.slice(0, -35);;
     }
 
     get activityType():string {
