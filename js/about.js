@@ -13,8 +13,6 @@ function parseTweets(runkeeper_tweets) {
 	const earliestTweet = new Date(Math.min(...times)).toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'});
 	const latestTweet = new Date(Math.max(...times)).toLocaleString('en-US', {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'});
 
-	// console.log(earliestTweet)
-	// console.log(latestTweet)
 	document.getElementById('firstDate').innerText = earliestTweet;
 	document.getElementById('lastDate').innerText = latestTweet;
 	
@@ -51,9 +49,6 @@ function parseTweets(runkeeper_tweets) {
 	
 	document.getElementsByClassName('written')[0].innerText = writtenTweets;
 	document.getElementsByClassName('writtenPct')[0].innerText = writtenPct + '%';
-
-
-
 }
 
 //Wait for the DOM to load

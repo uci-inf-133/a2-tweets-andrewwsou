@@ -45,7 +45,6 @@ class Tweet {
             return "unknown";
         }
         //TODO: parse the activity type from the text of the tweet
-        
         const currTweet = this.text.split(" ");
         if (currTweet.includes("km")) {
             return currTweet[currTweet.indexOf('km') + 1];
@@ -54,9 +53,6 @@ class Tweet {
             return currTweet[currTweet.indexOf('mi') + 1];
         }
         return currTweet[currTweet.indexOf('a') + 1];
-        // return currTweet[5];
-        // if (currTweet[5])
-        // return "";
     }
 
     get distance():number {

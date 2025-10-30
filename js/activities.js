@@ -12,8 +12,9 @@ function parseTweets(runkeeper_tweets) {
 
 	const activityTracker = {};
 	tweet_array.forEach( tweet => {
-		const activity = tweet.activityType;
+		let activity = tweet.activityType;
 		const distance = tweet.distance;
+
 		if (!activityTracker[activity]) {
 			activityTracker[activity] = { totalDistance: 0, logs: 0, weekday: 0, weekend: 0, weekdayLogs: 0, weekendLogs: 0 };
 		}
@@ -24,15 +25,13 @@ function parseTweets(runkeeper_tweets) {
 		const tweetTime = new Date(tweet.time);
 		const dayWeek = tweetTime.getDay();
 		const categorizedDOW = (dayWeek === 0 || dayWeek === 6) ? "weekend" : "weekday";
-		// console.log(categorizedDOW);
-		// console.log(activityTracker[activity].categorizedDOW);
+
 		activityTracker[activity][categorizedDOW] += distance;
 		if (categorizedDOW === "weekend") { activityTracker[activity].weekendLogs += 1; }
 		if (categorizedDOW === "weekday") { activityTracker[activity].weekdayLogs += 1; }
 	});
 
 	document.getElementById('numberActivities').innerText = Object.keys(activityTracker).length;
-	// console.log(activityTracker);
 
 	const activityLogs = Object.entries(activityTracker);
 	activityLogs.sort((a, b) => b[1].logs - a[1].logs);
@@ -57,7 +56,7 @@ function parseTweets(runkeeper_tweets) {
 		totalWeekdayAvg += currActivity.weekdayLogs > 0 ? currActivity.weekday / currActivity.weekdayLogs : 0;
 		totalWeekendAvg += currActivity.weekendLogs > 0 ? currActivity.weekend / currActivity.weekendLogs : 0;
 	}
-	// console.log(totalWeekdayAvg);
+
 	const lengthWeekdays = totalWeekdayAvg / Object.keys(activityTracker).length;
 	const lengthWeekends = totalWeekendAvg / Object.keys(activityTracker).length;
 
@@ -66,9 +65,6 @@ function parseTweets(runkeeper_tweets) {
 	} else {
 		document.getElementById('weekdayOrWeekendLonger').innerText = "weekends";
 	}
-
-	console.log(activityTracker);
-
 
 
 	//TODO: create a new array or manipulate tweet_array to create a graph of the number of tweets containing each type of activity.
@@ -103,8 +99,6 @@ function parseTweets(runkeeper_tweets) {
 			tweet.source === "completed_event" && top3Names.includes(tweet.activityType) && Number.isFinite(tweet.distance))
 		.map(tweet => 
 		({ activityType: tweet.activityType, distance: Number(tweet.distance), dayOfWeek: dayIndexes[tweet.time.getDay()]}));
-
-	console.log(topThreeGraphing);
 
 
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
@@ -155,7 +149,7 @@ function parseTweets(runkeeper_tweets) {
 			"aggregate": "mean",
 			"field": "distance",
 			"type": "quantitative",
-			"axis": { "title": "Mean of distances" }
+			"axis": { "title": "Mean of distance" }
 		},
 		"color": {
 			"field": "activityType", 
@@ -163,7 +157,6 @@ function parseTweets(runkeeper_tweets) {
 		}
 	  }
 	};
-	// vegaEmbed('#distanceVis', mean_vis_spec, {actions:false});
 
 	let showDistance = false;
 
